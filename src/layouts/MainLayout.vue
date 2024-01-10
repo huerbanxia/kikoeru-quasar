@@ -4,7 +4,7 @@
       <q-toolbar class="row justify-between">
         <q-btn flat dense round @click="drawerOpen = !drawerOpen" icon="menu" aria-label="Menu" />
 
-        <q-btn flat size="md" icon="arrow_back_ios" @click="back()" v-if="isNotAtHomePage"/>
+        <q-btn flat size="md" icon="arrow_back_ios" @click="back()" v-if="isNotAtHomePage" />
 
         <q-toolbar-title class="gt-xs">
           <router-link :to="'/'" class="text-white">
@@ -12,7 +12,8 @@
           </router-link>
         </q-toolbar-title>
 
-        <q-input v-if="$route.name !== 'advance search'" dark dense rounded standout v-model="keyword" debounce="500" input-class="text-right" class="q-mr-sm">
+        <q-input v-if="$route.name !== 'advance search'" dark dense rounded standout v-model="keyword" debounce="500"
+          input-class="text-right" class="q-mr-sm">
           <template v-slot:before>
             <q-btn round dense flat icon="manage_search" to="/search">
               <q-tooltip>点此进入聚合搜索，支持多关键字搜索</q-tooltip>
@@ -27,49 +28,24 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="drawerOpen"
-      show-if-above
-      :mini="miniState"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
-      mini-to-overlay
-
-      :width="230"
-      :breakpoint="500"
-      bordered
-      content-class=""
-    >
+    <q-drawer v-model="drawerOpen" show-if-above :mini="miniState" @mouseover="miniState = false"
+      @mouseout="miniState = true" mini-to-overlay :width="230" :breakpoint="500" bordered content-class="">
       <q-scroll-area class="fit padding-bottom-play-bar">
         <q-list>
-          <q-item
-            clickable
-            v-ripple
-            exact
-            :to="link.path"
-            active-class="text-deep-purple text-weight-medium"
-            v-for="(link, index) in getLinks()"
-            :key="index"
-            @click="miniState = true"
-          >
+          <q-item clickable v-ripple exact :to="link.path" active-class="text-deep-purple text-weight-medium"
+            v-for="(link, index) in getLinks()" :key="index" @click="miniState = true">
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
 
             <q-item-section>
               <q-item-label class="text-subtitle1">
-                {{link.title}}
+                {{ link.title }}
               </q-item-label>
             </q-item-section>
           </q-item>
 
-          <q-item
-            clickable
-            v-ripple
-            exact
-            active-class="text-deep-purple text-weight-medium"
-            @click="randomPlay"
-          >
+          <q-item clickable v-ripple exact active-class="text-deep-purple text-weight-medium" @click="randomPlay">
             <q-item-section avatar>
               <q-icon name="shuffle" />
             </q-item-section>
@@ -81,13 +57,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item
-            clickable
-            v-ripple
-            exact
-            active-class="text-deep-purple text-weight-medium"
-            @click="showTimer = true"
-          >
+          <q-item clickable v-ripple exact active-class="text-deep-purple text-weight-medium" @click="showTimer = true">
             <q-item-section avatar>
               <q-icon name="timer" />
             </q-item-section>
@@ -100,13 +70,7 @@
           </q-item>
 
 
-          <q-item
-            clickable
-            v-ripple
-            exact
-            active-class="text-deep-purple text-weight-medium"
-            @click="toggleDarkMode"
-          >
+          <q-item clickable v-ripple exact active-class="text-deep-purple text-weight-medium" @click="toggleDarkMode">
             <q-item-section avatar>
               <q-icon name="dark_mode" />
             </q-item-section>
@@ -120,14 +84,8 @@
         </q-list>
 
         <q-list>
-          <q-item
-            clickable
-            v-ripple
-            exact
-            active-class="text-deep-purple text-weight-medium"
-            @click="confirm = true"
-            v-if="authEnabled"
-          >
+          <q-item clickable v-ripple exact active-class="text-deep-purple text-weight-medium" @click="confirm = true"
+            v-if="authEnabled">
             <q-item-section avatar>
               <q-icon name="exit_to_app" />
             </q-item-section>
@@ -159,21 +117,23 @@
 
     <SleepMode v-model="showTimer" />
 
-    <q-page-container :class="{'page-container-style': isFullScreenPage, 'padding-bottom-play-bar': !isFullScreenPage}">
+    <q-page-container :class="{ 'page-container-style': isFullScreenPage, 'padding-bottom-play-bar': !isFullScreenPage }">
       <!-- <q-page padding> -->
-        <keep-alive include="Works">
-          <router-view />
-        </keep-alive>
+      <keep-alive include="Works">
+        <router-view />
+      </keep-alive>
       <!-- </q-page> -->
-        <q-page-scroller v-if="!isFullScreenPage" position="bottom-right" :scroll-offset="150" :offset="[18, 90]" class="scroller" :class="{'scroller-hide': !showScroller, 'scroller-show': showScroller}">
-          <q-btn dense fab icon="keyboard_arrow_up" color="accent" padding="sm" />
-        </q-page-scroller>
+      <q-page-scroller v-if="!isFullScreenPage" position="bottom-right" :scroll-offset="150" :offset="[18, 90]"
+        class="scroller" :class="{ 'scroller-hide': !showScroller, 'scroller-show': showScroller }">
+        <q-btn dense fab icon="keyboard_arrow_up" color="accent" padding="sm" />
+      </q-page-scroller>
     </q-page-container>
 
-    <div :style="{'z-index': miniState ? 3001 : 0}" style="position: fixed; bottom: 0;"> <!-- z-index must be greater than header z-index -->
+    <div :style="{ 'z-index': miniState ? 3001 : 0 }" style="position: fixed; bottom: 0;">
+      <!-- z-index must be greater than header z-index -->
       <PlayerBar />
       <AudioPlayer />
-      <LyricsBar v-if="! enablePIPLyrics"/>
+      <LyricsBar v-if="!enablePIPLyrics" />
       <PIPLyrics />
     </div>
     <q-footer class="q-pa-none">
@@ -204,9 +164,9 @@ export default {
     LyricsBar,
     SleepMode,
     PIPLyrics,
-},
+  },
 
-  data () {
+  data() {
     return {
       keyword: '',
       drawerOpen: false,
@@ -268,29 +228,32 @@ export default {
   },
 
   watch: {
-    keyword () {
+    keyword() {
       this.$router.push(this.keyword ? `/works?keyword=${this.keyword}` : `/works`)
     },
 
-    randId () {
+    randId() {
       this.$router.push(`/work/${this.randId}`)
     },
-    sharedConfig (config) {
+    sharedConfig(config) {
       this.SET_REWIND_SEEK_TIME(config.rewindSeekTime);
       this.SET_FORWARD_SEEK_TIME(config.forwardSeekTime);
     },
   },
 
-  mounted () {
+  mounted() {
     this.initUser();
     this.checkUpdate();
     this.readSharedConfig();
+
+    // 默认开启夜间模式
+    Dark.set(true)
   },
 
   computed: {
-    isNotAtHomePage () {
+    isNotAtHomePage() {
       const path = this.$route.path
-      return path && path !=='/' && path !=='/works' && path !== '/favourites';
+      return path && path !== '/' && path !== '/works' && path !== '/favourites';
     },
 
     isFullScreenPage() {
@@ -302,7 +265,7 @@ export default {
       userName: 'name',
       authEnabled: 'auth'
     }),
-    
+
     ...mapState('AudioPlayer', [
       'playWorkId',
       'enablePIPLyrics',
@@ -319,7 +282,7 @@ export default {
       'SET_FORWARD_SEEK_TIME',
       'SET_AI_SERVER_URL',
     ]),
-    initUser () {
+    initUser() {
       this.$axios.get('/api/auth/me')
         .then((res) => {
           this.$store.commit('User/INIT', res.data.user)
@@ -332,7 +295,7 @@ export default {
               // this.showWarnNotif(error.response.data.error)
               // 验证失败，跳转到登录页面
               const path = this.$router.currentRoute.path
-              if (path !=='/login') {
+              if (path !== '/login') {
                 this.$router.push('/login');
               }
             } else {
@@ -344,7 +307,7 @@ export default {
         })
     },
 
-    checkUpdate () {
+    checkUpdate() {
       this.$axios.get('/api/version')
         .then((res) => {
           if (res.data.update_available && res.data.notifyUser) {
@@ -356,7 +319,8 @@ export default {
               timeout: 5000,
               actions: [
                 { label: '好', color: 'white' },
-                { label: '查看', color: 'white', handler: () => {
+                {
+                  label: '查看', color: 'white', handler: () => {
                     Object.assign(document.createElement('a'), {
                       target: '_blank',
                       href: 'https://github.com/umonaca/kikoeru-express/releases',
@@ -368,13 +332,13 @@ export default {
           }
 
           if (res.data.lockFileExists) {
-            this.$q.notify ({
+            this.$q.notify({
               message: res.data.lockReason,
               type: 'warning',
               timeout: 60000,
               actions: [
                 { label: '以后提醒我', color: 'black' },
-                { label: '前往扫描页', color: 'black', handler: () => this.$router.push('/admin/scanner')}
+                { label: '前往扫描页', color: 'black', handler: () => this.$router.push('/admin/scanner') }
               ],
             })
           }
@@ -384,10 +348,10 @@ export default {
         })
     },
 
-    readSharedConfig(){
+    readSharedConfig() {
       this.$axios.get('/api/config/shared')
         .then((response) => {
-           this.sharedConfig = response.data.sharedConfig;
+          this.sharedConfig = response.data.sharedConfig;
         })
         .catch((error) => {
           if (error.response) {
@@ -396,7 +360,7 @@ export default {
               // this.showWarnNotif(error.response.data.error)
               // 验证失败，跳转到登录页面
               const path = this.$router.currentRoute.path
-              if (path !=='/login') {
+              if (path !== '/login') {
                 this.$router.push('/login');
               }
             } else {
@@ -412,7 +376,7 @@ export default {
       this.requestRandomWork();
     },
 
-    requestRandomWork () {
+    requestRandomWork() {
       const params = {
         order: 'betterRandom'
       }
@@ -433,12 +397,12 @@ export default {
         })
     },
 
-    logout () {
+    logout() {
       this.$q.localStorage.set('jwt-token', '')
       this.$router.push('/login')
     },
 
-    back () {
+    back() {
       this.$router.go(-1)
     },
 
@@ -456,14 +420,14 @@ export default {
       }).map(link => {
         if (link.path === '/fullScreenPlayer') {
           // fullScreenPlayer这个时候肯定有在播放作品，将playerWorkId添加到url中，方便刷新后依然能够找到对应的作品
-          link = {...link}; // copy
+          link = { ...link }; // copy
           link.path += `/${this.playWorkId}`;
         }
         return link;
       });
 
     },
-    
+
     onHeaderRevealChange(isReveal) {
       this.showScroller = isReveal;
     }
@@ -474,12 +438,12 @@ export default {
 
 <style lang="scss">
 // 侧边栏底部按钮
-  aside.q-drawer div.q-scrollarea > div.scroll > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
+aside.q-drawer div.q-scrollarea>div.scroll>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
 
 // 中心主要页面的尺寸样式
 .page-container-style {
@@ -493,7 +457,7 @@ export default {
 
 // 为了避开底部的play bar设置的padding
 .padding-bottom-play-bar {
-  padding-bottom: 80px !important 
+  padding-bottom: 80px !important
 }
 
 .scroller {
